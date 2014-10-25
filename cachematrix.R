@@ -20,4 +20,19 @@ getinverse <- function() inv
 # Return the matrix with our newly defined functions
 list(set = setmatrix, get = getmatrix, setinv = setinverse, getinv = getinverse)
 }
-
+# cacheSolve: Compute the inverse of the matrix. If the inverse is already
+# calculated before, it returns the cached inverse.
+cacheSolve <- function(x, ...) {
+inv <- x$getinverse()
+# If the inverse is already calculated, return it
+if (!is.null(inv)) {
+message("getting cached data")
+return(inv)
+}
+# The cache does not exist, perform new calculation and cache the inverse
+data <- x$getinverse()
+inv <- solve(data, ...)
+x$setinverse(inv)
+# Return inverse
+inv
+}
